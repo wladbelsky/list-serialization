@@ -73,7 +73,7 @@ namespace ListSerialization
 
         }
 
-        public void addRandomNode()
+        public void AddRandomNode()
         {
             Count++;
             Random random = new Random();
@@ -88,7 +88,7 @@ namespace ListSerialization
             
         }
 
-        public void randomizeNodes()
+        public void RandomizeNodes()
         {
             Random random = new Random();
             ListNode currentlyProcessedNode = Head;
@@ -103,19 +103,11 @@ namespace ListSerialization
                 currentlyProcessedNode.Random = selectedNode;
             } while((currentlyProcessedNode = currentlyProcessedNode.Next) != null);
         }
-     }
 
-    
-
-    class Program
-    {
-
-        static Random random = new Random();
-
-        static bool compareLists(ListRand first, ListRand second)
+        public bool Equals (ListRand toCompare)
         {
-            ListNode firstItem = first.Head;
-            ListNode secondItem = second.Head;
+            ListNode firstItem = Head;
+            ListNode secondItem = toCompare.Head;
             do
             {
                 if(!firstItem.Data.Equals(secondItem.Data) && !firstItem.Random.Data.Equals(secondItem.Random.Data))
@@ -123,17 +115,23 @@ namespace ListSerialization
             } while((firstItem = firstItem.Next) != null && (secondItem = secondItem.Next) != null);
             return true;
         }
+     }
 
+    
+
+    class Program
+    {
         static void Main(string[] args)
         {
+            Random random = new Random();
             int length = 7;
 
             ListRand first = new ListRand();
 
             for (int i = 0; i < length; i++)
-                first.addRandomNode();
+                first.AddRandomNode();
 
-            first.randomizeNodes();
+            first.RandomizeNodes();
 
             FileStream fs = new FileStream("list.txt", FileMode.OpenOrCreate);
             first.Serialize(fs);
@@ -145,7 +143,7 @@ namespace ListSerialization
             fs.Close();
 
 
-            if (compareLists(first, second)) 
+            if (first.Equals(second)) 
                 Console.WriteLine("Списки идентичны");
             Console.Read();
             
