@@ -133,14 +133,16 @@ namespace ListSerialization
 
             first.RandomizeNodes();
 
-            FileStream fs = new FileStream("list.txt", FileMode.OpenOrCreate);
-            first.Serialize(fs);
-            fs.Close();
+            using(FileStream fs = new FileStream("list.txt", FileMode.OpenOrCreate))
+            {
+                first.Serialize(fs);
+            }
 
             ListRand second = new ListRand();
-            fs = new FileStream("list.txt", FileMode.Open);
-            second.Deserialize(fs);
-            fs.Close();
+            using(FileStream fs = new FileStream("list.txt", FileMode.Open))
+            {
+                second.Deserialize(fs);
+            }
 
 
             if (first.Equals(second)) 
